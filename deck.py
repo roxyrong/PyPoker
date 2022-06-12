@@ -1,7 +1,23 @@
 import random
-from poker import Card
+from poker import Card as IterCard
+from pokereval.card import Card
 
-FULL_DECK = list(Card)
+
+class PokerCard(IterCard):
+    # Combine two poker card packages to work better with poker hand evaluator
+    STRING_TO_SUIT = {"s": 1, "h": 2, "d": 3, "c": 4}
+
+    @property
+    def numerical(self):
+        rank = self.rank.value[1]
+        suit = self.suit.value[1]
+        if rank == 1:
+            rank = 14
+        suit = self.STRING_TO_SUIT[suit]
+        return Card(rank, suit)
+
+
+FULL_DECK = list(PokerCard)
 
 
 class Deck:
